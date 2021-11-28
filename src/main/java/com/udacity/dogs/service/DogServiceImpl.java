@@ -5,28 +5,50 @@ import com.udacity.dogs.repository.DogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DogServiceImpl implements DogService {
 
+    @Autowired
+    DogRepository dogRepository;
+
     @Override
     public List<Dog> retrieveDogs() {
-        return null;
+        return (List<Dog>) dogRepository.findAll();
     }
 
     @Override
     public List<String> retrieveDogBreed() {
-        return null;
+        List<Dog> dogs = (List<Dog>) dogRepository.findAll();
+        List<String> breed = new ArrayList<>();
+        for (Dog dog: dogs) {
+            breed.add(dog.getBreed());
+        }
+        return breed;
     }
 
     @Override
     public String retrieveDogBreedById(Long id) {
-        return null;
+        List<Dog> dogs = (List<Dog>) dogRepository.findAll();
+        Dog dogFoundById = new Dog();
+        for (Dog dog: dogs) {
+            if (dog.getId() == id){
+                dogFoundById = dog;
+                break;
+            }
+        }
+        return dogFoundById.getBreed();
     }
 
     @Override
     public List<String> retrieveDogNames() {
-        return null;
+        List<Dog> dogs = (List<Dog>) dogRepository.findAll();
+        List<String> names = new ArrayList<>();
+        for (Dog dog: dogs) {
+            names.add(dog.getBreed());
+        }
+        return names;
     }
 }
