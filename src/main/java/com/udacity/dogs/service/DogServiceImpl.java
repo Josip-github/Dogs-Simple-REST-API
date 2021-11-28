@@ -32,8 +32,12 @@ public class DogServiceImpl implements DogService {
     @Override
     public String retrieveDogBreedById(Long id) throws DogNotFoundException {
         List<Dog> dogs = (List<Dog>) dogRepository.findAll();
+        List<Long> listOfIds = new ArrayList<>();
+        for (Dog dog: dogs) {
+            listOfIds.add(dog.getId());
+        }
 
-        if(!dogs.contains(id)){
+        if(!listOfIds.contains(id)){
             throw new DogNotFoundException("Dog not found");
         }
 
@@ -52,7 +56,7 @@ public class DogServiceImpl implements DogService {
         List<Dog> dogs = (List<Dog>) dogRepository.findAll();
         List<String> names = new ArrayList<>();
         for (Dog dog: dogs) {
-            names.add(dog.getBreed());
+            names.add(dog.getName());
         }
         return names;
     }

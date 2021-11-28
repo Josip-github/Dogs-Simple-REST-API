@@ -1,6 +1,7 @@
 package com.udacity.dogs.controller;
 
 import com.udacity.dogs.model.Dog;
+import com.udacity.dogs.service.DogNotFoundException;
 import com.udacity.dogs.service.DogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,8 +36,13 @@ public class DogController {
 
     @GetMapping("/breed/{id}")
     public ResponseEntity<String> getBreedById(@PathVariable Long id){
-        String dogBreed = dogService.retrieveDogBreedById(id);
-        return new ResponseEntity<String>(dogBreed, HttpStatus.OK);
+        try {
+            String dogBreed = dogService.retrieveDogBreedById(id);
+            return new ResponseEntity<String>(dogBreed, HttpStatus.OK);
+        } catch (DogNotFoundException e){
+            //dnfe.getMessage();
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/dogs/names")
